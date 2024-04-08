@@ -4,6 +4,7 @@ import 'package:vit_connect_plus/common/styles/shadows.dart';
 import 'package:vit_connect_plus/common/widgets/appbar.dart';
 import 'package:vit_connect_plus/common/widgets/rounded_image.dart';
 import 'package:vit_connect_plus/features/lost_and_found/widgets/found_card_vertical.dart';
+import 'package:vit_connect_plus/features/lost_and_found/widgets/lost_grid_view.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -15,11 +16,9 @@ class LostAndFoundScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-          floatingActionButton: FoundItemAdd(formKey: _formKey),
           appBar: AppBar(
             title: LFAppBar(),
             bottom: TabBar(labelStyle: TextStyle(fontSize: 12), tabs: [
@@ -194,36 +193,48 @@ class _FoundItemAddState extends State<FoundItemAdd> {
 }
 
 class LostScreen extends StatelessWidget {
-  const LostScreen({
+  LostScreen({
     super.key,
   });
-
+  final _formKey2 = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [Text("lost")],
+    return Scaffold(
+      floatingActionButton: LostItemAdd(formKey2: _formKey2),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(""),
+            LostGridView(
+              itemCount: 2,
+              itemBuilder: (_, index) => const FoundCardVertical(),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
 class FoundScreen extends StatelessWidget {
-  const FoundScreen({
+  FoundScreen({
     super.key,
   });
-
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Text(""),
-          FoundGridView(
-            itemCount: 8,
-            itemBuilder: (_, index) => const FoundCardVertical(),
-          )
-        ],
+    return Scaffold(
+      floatingActionButton: FoundItemAdd(formKey: _formKey),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(""),
+            FoundGridView(
+              itemCount: 8,
+              itemBuilder: (_, index) => const FoundCardVertical(),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -314,6 +325,152 @@ class RoundedContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(radius),
           border: showBorder ? Border.all(color: borderColor) : null),
       child: child,
+    );
+  }
+}
+
+class LostItemAdd extends StatefulWidget {
+  LostItemAdd({
+    super.key,
+    required GlobalKey<FormState> formKey2,
+  }) : _formKey2 = formKey2;
+
+  final GlobalKey<FormState> _formKey2;
+
+  @override
+  State<LostItemAdd> createState() => _LostItemAddState();
+}
+
+class _LostItemAddState extends State<LostItemAdd> {
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(2015, 8),
+        lastDate: DateTime(2101));
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      child: Icon(
+        Iconsax.add_square,
+        color: Colors.white,
+      ),
+      onPressed: () async {
+        await showDialog<void>(
+            context: context,
+            builder: (context) => AlertDialog(
+                  backgroundColor: Colors.white,
+                  content: SingleChildScrollView(
+                    child: RoundedContainer(
+                      width: double.infinity,
+                      backgroundColor: Colors.white,
+                      radius: 4,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: <Widget>[
+                          Positioned(
+                            right: -30,
+                            top: -30,
+                            child: InkResponse(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const CircleAvatar(
+                                backgroundColor:
+                                    Color.fromARGB(255, 209, 94, 86),
+                                child: Icon(
+                                  Iconsax.clipboard_close,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Form(
+                            key: widget._formKey2,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    "Lost Something? Report It",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 180,
+                                  child: OutlinedButton(
+                                    onPressed: () => _selectDate(context),
+                                    child: const Text('Select date'),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                        prefixIcon: Icon(Iconsax.forward_item),
+                                        labelText: "Item Name"),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                        prefixIcon: Icon(Iconsax.location),
+                                        labelText: "Lost at"),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                        prefixIcon: Icon(Iconsax.user),
+                                        labelText: "Contact Info"),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: Sizes.spacebtwitems,
+                                ),
+                                SizedBox(
+                                  height: Sizes.spaceBtwSections,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                MyColors.primary)),
+                                    child: const Text('   Report Item   '),
+                                    onPressed: () {
+                                      if (widget._formKey2.currentState!
+                                          .validate()) {
+                                        widget._formKey2.currentState!.save();
+                                      }
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ));
+      },
+      backgroundColor: MyColors.primary,
     );
   }
 }
