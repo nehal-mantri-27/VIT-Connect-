@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:vit_connect_plus/common/styles/shadows.dart';
 import 'package:vit_connect_plus/common/widgets/rounded_image.dart';
@@ -13,14 +14,14 @@ class FoundCardHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Container(
-        width: 180,
+        width: 400,
         padding: EdgeInsets.all(1),
         decoration: BoxDecoration(
           boxShadow: [ShadowStyle.verticalProductShadow],
           borderRadius: BorderRadius.circular(16),
           color: dark ? MyColors.darkerGrey : Colors.white,
         ),
-        child: Column(
+        child: Row(
           children: [
             //thumbnail:wishlist button and discount tag
             RoundedContainer(
@@ -82,19 +83,23 @@ class FoundCardHorizontal extends StatelessWidget {
                     "Found : AB3 Amphitheatre",
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                    maxLines: 3,
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "Contact : 2938218329, 454 block b",
+                    "Contact : 2938dcefc218329, 454 block b",
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(
-                    height: 8,
-                  )
+                    height: 0,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: const Text('Returned it?'),
+                  ),
                 ],
               ),
             )

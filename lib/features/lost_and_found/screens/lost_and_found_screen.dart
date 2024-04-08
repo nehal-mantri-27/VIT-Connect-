@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:vit_connect_plus/common/styles/shadows.dart';
 import 'package:vit_connect_plus/common/widgets/appbar.dart';
 import 'package:vit_connect_plus/common/widgets/rounded_image.dart';
+import 'package:vit_connect_plus/features/lost_and_found/widgets/found_card_horizontal.dart';
 import 'package:vit_connect_plus/features/lost_and_found/widgets/found_card_vertical.dart';
 import 'package:vit_connect_plus/features/lost_and_found/widgets/lost_grid_view.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
@@ -228,6 +229,7 @@ class FoundScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            FoundCardHorizontal(),
             Text(""),
             FoundGridView(
               itemCount: 8,
