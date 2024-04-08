@@ -6,8 +6,8 @@ import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
 
-class FoundCardVertical extends StatelessWidget {
-  const FoundCardVertical({super.key});
+class FoundCardHorizontal extends StatelessWidget {
+  const FoundCardHorizontal({super.key});
 
   @override
   Widget build(BuildContext context) {
