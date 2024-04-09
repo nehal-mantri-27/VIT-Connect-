@@ -1,20 +1,64 @@
 import 'package:flutter/material.dart';
-
-import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:vit_connect_plus/common/styles/shadows.dart';
 import 'package:vit_connect_plus/common/widgets/rounded_image.dart';
+import 'package:vit_connect_plus/utils/constants/api_endpoints.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
-
+import 'dart:convert'; // Import dart:convert to use jsonEncode
 class FoundCardHorizontal extends StatelessWidget {
   final String name;
   final String date;
   final String location;
   final String contact;
   final String imageUrl;
-  const FoundCardHorizontal({super.key, required this.name, required this.date, required this.location, required this.contact, required this.imageUrl});
+  final String foundID;
+  const FoundCardHorizontal(
+      {super.key,
+      required this.name,
+      required this.date,
+      required this.location,
+      required this.contact,
+      required this.imageUrl,
+      required this.foundID});
+
+  
+
+Future<void> sendPostRequest() async {
+  // Define your endpoint URL
+  try {
+    // Convert your data to JSON format
+    Map<String, dynamic> requestData = {
+      'found_id': foundID
+    };
+    String jsonData = jsonEncode(requestData);
+
+    // Send a POST request to the endpoint with JSON data
+    final http.Response response = await http.post(
+      Uri.parse(deleteFoundItem),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8', // Set the Content-Type header
+      },
+      body: jsonData,
+    );
+
+    // Check the response status code
+    if (response.statusCode == 200) {
+      // Request was successful
+      print('POST request successful!');
+    } else {
+      // Request failed
+      print(
+          'Failed to send POST request. Status code: ${response.statusCode}');
+    }
+  } catch (error) {
+    // An error occurred while sending the request
+    print('Error sending POST request: $error');
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +147,9 @@ class FoundCardHorizontal extends StatelessWidget {
                     height: 0,
                   ),
                   OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      sendPostRequest();
+                    },
                     child: const Text('Returned it?'),
                   ),
                 ],
