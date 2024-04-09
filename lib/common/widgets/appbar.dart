@@ -18,6 +18,7 @@ class MyAppBar extends StatelessWidget implements PreferredSize {
   final IconData? leadingIcon;
   final List<Widget>? actions;
   final VoidCallback? leadingOnPressed;
+
   @override
   Widget build(BuildContext context) {
     return Padding(

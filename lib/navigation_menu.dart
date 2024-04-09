@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:vit_connect_plus/features/healthcare/screens/health_care_screen.dart';
 import 'package:vit_connect_plus/features/home/screens/home_screen.dart';
 import 'package:vit_connect_plus/features/lost_and_found/screens/lost_and_found_screen.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
@@ -54,8 +55,8 @@ class NavigationController extends GetxController {
   final Rx<int> selectedIndex = 0.obs;
   final screens = [
     const HomeScreen(),
-    Container(color: Colors.purple),
-    Container(color: Colors.blue),
+    const HealthCareScreen(),
+    Container(color: Colors.black),
     const LostAndFoundScreen()
   ];
 }

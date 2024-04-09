@@ -14,7 +14,6 @@ class FoundCardHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     final dark = HelperFunctions.isDarkMode(context);
     return Container(
-        width: 400,
         padding: EdgeInsets.all(1),
         decoration: BoxDecoration(
           boxShadow: [ShadowStyle.verticalProductShadow],
@@ -87,7 +86,7 @@ class FoundCardHorizontal extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "Contact : 2938dcefc218329, 454 block b",
+                    "Contact : 293fc218329, 454 block b",
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
