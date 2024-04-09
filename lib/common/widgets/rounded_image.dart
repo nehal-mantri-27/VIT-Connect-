@@ -37,6 +37,8 @@ class RoundedImage extends StatelessWidget {
             ? BorderRadius.circular(radius)
             : BorderRadius.zero,
         child: Image(
+          width: width,
+          height: height,
             //to add border radius to the image we wrap the image widget with another widget cliprrect
             image: isNetworkImage
                 ? NetworkImage(imageUrl)

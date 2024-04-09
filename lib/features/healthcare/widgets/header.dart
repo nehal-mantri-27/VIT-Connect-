@@ -77,7 +77,7 @@ class PrimaryHeaderContainer extends StatelessWidget {
         padding: EdgeInsets.all(0),
         //for the shapes we use the stack widget to layout on top of each other
         child: SizedBox(
-          height: 400,
+
           child: Stack(
             children: [
               //to create a circular container, use box decoration

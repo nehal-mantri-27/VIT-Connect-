@@ -10,4 +10,6 @@ const String retreiveAllLostItems = "$url/retreive_all_lost_items";
 const String retreiveUserLostItems = "$url/retrieve_lost_items_user";
 const String deleteLostItem = "$url/delete_lost_item";
 
-// 192.168.186.140
+const String retreiveAllDoctors = "$url/retreive_all_doctor_details";
+const String retreiverSlots = "$url/retreiveTimeList";
+const String bookAppointment = "$url/book";

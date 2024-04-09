@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:vit_connect_plus/common/widgets/rounded_image.dart';
+import 'package:vit_connect_plus/features/healthcare/screens/doctor_screen.dart';
 import 'package:vit_connect_plus/features/healthcare/screens/medicine_screen.dart';
 import 'package:vit_connect_plus/features/healthcare/widgets/header.dart';
 import 'package:vit_connect_plus/features/lost_and_found/screens/lost_and_found_screen.dart';
+import 'package:vit_connect_plus/models/appointment.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
@@ -41,55 +43,26 @@ class HealthCareScreen extends StatelessWidget {
   }
 }
 
-class DoctorScreen extends StatelessWidget {
-  const DoctorScreen({Key? key}) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(Sizes.defaultSpace),
-          child: Column(
-            children: [
-              DoctorInfoCard(),
-              SizedBox(height: 16),
-              DoctorInfoCard(
-                backgroundColor: MyColors.primary.withOpacity(0.85),
-                buttonColor: MyColors.primary.withOpacity(0.95),
-              ),
-              SizedBox(height: 16),
-              DoctorInfoCard(),
-              SizedBox(height: 16),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
 
-class DoctorInfoCard extends StatelessWidget {
-  DoctorInfoCard({
-    Key? key,
-    this.name = "John Doe",
-    this.qualification = "MBBS|MD (Physician)",
-    this.location = "HealthCdentre, Ground Floor",
-    Color? backgroundColor,
-    Color? buttonColor,
-  })  : backgroundColor = backgroundColor ?? MyColors.primary.withOpacity(0.7),
-        buttonColor = buttonColor ?? MyColors.primary.withOpacity(0.4),
-        super(key: key);
+Widget? doctorInfoCard({
+  required BuildContext context,
+  required int index,
+  String name = "John Doe",
+  String doctorId = "hrthrhe",
+  String qualification = "MBBS|MD (Physician)",
+  String location = "HealthCentre, Ground Floor",
+  required String imageUrl ,
+  Color? backgroundColor,
+  Color? buttonColor,
+}) {
+  backgroundColor = backgroundColor ?? MyColors.primary.withOpacity(0.7);
+  buttonColor = buttonColor ?? MyColors.primary.withOpacity(0.4);
   final appointmentController = Get.put(AppointmentController());
 
-  final String name;
-  final String qualification;
-  final String location;
-  final Color backgroundColor;
-  final Color buttonColor;
-  @override
-  Widget build(BuildContext context) {
-    return RoundedContainer(
+  return Padding(
+    padding: EdgeInsets.only(bottom: 18.0),
+    child: RoundedContainer(
       height: 190,
       width: double.infinity,
       backgroundColor: backgroundColor,
@@ -99,11 +72,10 @@ class DoctorInfoCard extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 60,
-              backgroundImage: AssetImage("assets/images/found-1.jpeg"),
+              backgroundImage: Image.network(imageUrl).image,
             ),
             SizedBox(width: 16),
             Expanded(
-              // Wrap the Text widget with Expanded
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -125,7 +97,7 @@ class DoctorInfoCard extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    location, // Removed Expanded widget here
+                    location,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: Theme.of(context).textTheme.bodyLarge!.apply(
@@ -139,11 +111,11 @@ class DoctorInfoCard extends StatelessWidget {
                   OutlinedButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all<Color>(
-                          buttonColor, // Background color
+                          buttonColor,
                         ),
                       ),
                       onPressed: () {
-                        appointmentController.goToBookAppointment();
+                        appointmentController.goToBookAppointment(name,qualification,location,imageUrl,doctorId);
                       },
                       child: Text(
                         "Check Availability",
@@ -155,8 +127,8 @@ class DoctorInfoCard extends StatelessWidget {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 class HistoryScreen extends StatelessWidget {
@@ -164,6 +136,24 @@ class HistoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    // Dummy data
+    final List<Appointment> appointments = [
+      Appointment(doctorId: '1', userId: '1', time: '10:00', day: 'Monday'),
+      Appointment(doctorId: '2', userId: '2', time: '11:00', day: 'Tuesday'),
+      // Add more appointments...
+    ];
+
+    return ListView.builder(
+      itemCount: appointments.length,
+      itemBuilder: (context, index) {
+        final appointment = appointments[index];
+        return ListTile(
+          title: Text('Doctor ID: ${appointment.doctorId}'),
+          subtitle: Text('User ID: ${appointment.userId}\n'
+              'Appointment Time: ${appointment.time}\n'
+              'Day: ${appointment.day}'),
+        );
+      },
+    );
   }
 }

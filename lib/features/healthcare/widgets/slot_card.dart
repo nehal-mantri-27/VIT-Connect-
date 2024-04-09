@@ -3,7 +3,10 @@ import 'package:vit_connect_plus/features/lost_and_found/screens/lost_and_found_
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 
 class SlotCard extends StatefulWidget {
-  const SlotCard({Key? key}) : super(key: key);
+  final int slotIndex;
+final ValueChanged<int> onSelected;
+
+  const SlotCard({Key? key, required this.onSelected, required this.slotIndex}) : super(key: key);
 
   @override
   _SlotCardState createState() => _SlotCardState();
@@ -11,6 +14,13 @@ class SlotCard extends StatefulWidget {
 
 class _SlotCardState extends State<SlotCard> {
   bool isSelected = false;
+  int get slot => widget.slotIndex;
+  int? nextSlot;
+  @override
+  void initState() {
+    super.initState();
+    nextSlot = slot + 1;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +29,10 @@ class _SlotCardState extends State<SlotCard> {
         setState(() {
           isSelected = !isSelected;
         });
+
+        if(isSelected){
+          widget.onSelected(slot);
+      }
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -37,10 +51,10 @@ class _SlotCardState extends State<SlotCard> {
           height: 50,
           child: Center(
             child: Text(
-              isSelected ? "9:00-10:00" : "9:00-10:00",
+              isSelected ? "$slot:00-$nextSlot:00" : "$slot:00-$nextSlot:00",
               style: TextStyle(
                 color: isSelected ? Colors.white : Colors.black,
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.bold,
               ),
             ),

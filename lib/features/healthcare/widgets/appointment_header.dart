@@ -7,12 +7,19 @@ import 'package:vit_connect_plus/utils/constants/sizes.dart';
 
 class HeaderAndTabsAP extends StatelessWidget {
   const HeaderAndTabsAP({
+    required this.doctorName,
+    required this.imageUrl,
+    required this.venue,
+    required this.type,
     super.key,
     required this.dark,
   });
 
   final bool dark;
-
+  final String doctorName;
+  final String imageUrl;
+  final String venue;
+  final String type;
   @override
   Widget build(BuildContext context) {
     return PrimaryHeaderContainer(
@@ -28,9 +35,10 @@ class HeaderAndTabsAP extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: RoundedImage(
-                      height: 250,
-                      imageUrl: "assets/images/found-1.jpeg",
-                      isNetworkImage: false),
+                      width: 300,
+                      height: 300,
+                      imageUrl: imageUrl,
+                      isNetworkImage: true),
                 ),
 
                 SizedBox(height: 10),
@@ -44,11 +52,11 @@ class HeaderAndTabsAP extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Dr John Doe",
+                  doctorName,
                   style: Theme.of(context).textTheme.displaySmall,
                 ),
-                Text("MBBS|MD (Physician)"),
-                Text("HealthCentre, Ground FLoor")
+                Text(type),
+                Text(venue)
               ],
             ),
           ),
