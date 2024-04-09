@@ -15,6 +15,7 @@ class RoundedImage extends StatelessWidget {
     this.padding,
     required this.isNetworkImage ,
     this.onPressed,
+    this.radius = Sizes.md,
   });
   final double? width, height;
   final String imageUrl;
@@ -25,6 +26,7 @@ class RoundedImage extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final bool isNetworkImage;
   final VoidCallback? onPressed;
+  final double radius;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class RoundedImage extends StatelessWidget {
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(Sizes.md)),
       child: ClipRRect(
         borderRadius: applyImageRadius
-            ? BorderRadius.circular(Sizes.md)
+            ? BorderRadius.circular(radius)
             : BorderRadius.zero,
         child: Image(
             //to add border radius to the image we wrap the image widget with another widget cliprrect
