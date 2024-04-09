@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:vit_connect_plus/common/widgets/rounded_image.dart';
 import 'package:vit_connect_plus/features/healthcare/screens/medicine_screen.dart';
 import 'package:vit_connect_plus/features/healthcare/widgets/header.dart';
@@ -7,6 +8,7 @@ import 'package:vit_connect_plus/features/lost_and_found/screens/lost_and_found_
 import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
+import 'package:vit_connect_plus/features/healthcare/controllers/appointment_controller.dart';
 
 class HealthCareScreen extends StatelessWidget {
   const HealthCareScreen({Key? key}) : super(key: key);
@@ -72,12 +74,13 @@ class DoctorInfoCard extends StatelessWidget {
     Key? key,
     this.name = "John Doe",
     this.qualification = "MBBS|MD (Physician)",
-    this.location = "HealthCentre, Ground Floor",
+    this.location = "HealthCdentre, Ground Floor",
     Color? backgroundColor,
     Color? buttonColor,
   })  : backgroundColor = backgroundColor ?? MyColors.primary.withOpacity(0.7),
         buttonColor = buttonColor ?? MyColors.primary.withOpacity(0.4),
         super(key: key);
+  final appointmentController = Get.put(AppointmentController());
 
   final String name;
   final String qualification;
@@ -87,7 +90,7 @@ class DoctorInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedContainer(
-      height: 165,
+      height: 190,
       width: double.infinity,
       backgroundColor: backgroundColor,
       child: Padding(
@@ -106,7 +109,7 @@ class DoctorInfoCard extends StatelessWidget {
                 children: [
                   Text(
                     name,
-                    style: Theme.of(context).textTheme.titleLarge!.apply(
+                    style: Theme.of(context).textTheme.titleSmall!.apply(
                           color: MyColors.light,
                           fontSizeDelta: 2,
                         ),
@@ -139,7 +142,9 @@ class DoctorInfoCard extends StatelessWidget {
                           buttonColor, // Background color
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        appointmentController.goToBookAppointment();
+                      },
                       child: Text(
                         "Check Availability",
                         style: TextStyle(color: Colors.white),
