@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:iconsax/iconsax.dart';
+
+import 'package:get/get.dart';
+
 import 'package:vit_connect_plus/common/styles/shadows.dart';
 import 'package:vit_connect_plus/common/widgets/rounded_image.dart';
 import 'package:vit_connect_plus/utils/constants/colors.dart';
@@ -8,7 +9,12 @@ import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
 
 class FoundCardHorizontal extends StatelessWidget {
-  const FoundCardHorizontal({super.key});
+  final String name;
+  final String date;
+  final String location;
+  final String contact;
+  final String imageUrl;
+  const FoundCardHorizontal({super.key, required this.name, required this.date, required this.location, required this.contact, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,8 @@ class FoundCardHorizontal extends StatelessWidget {
               child: Stack(
                 children: [
                   RoundedImage(
-                    imageUrl: "assets/images/found-1.jpeg",
+                    isNetworkImage: true,
+                    imageUrl: imageUrl,
                     applyImageRadius: true,
                   ),
                   Positioned(
@@ -59,7 +66,7 @@ class FoundCardHorizontal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Key Chain",
+                    name,
                     style: Theme.of(context)
                         .textTheme
                         .labelLarge!
@@ -69,7 +76,7 @@ class FoundCardHorizontal extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "day : 22-2-2024",
+                    date,
                     style: Theme.of(context)
                         .textTheme
                         .labelMedium!
@@ -79,14 +86,14 @@ class FoundCardHorizontal extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "Found : AB3 Amphitheatre",
+                    location,
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "Contact : 293fc218329, 454 block b",
+                    contact,
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,

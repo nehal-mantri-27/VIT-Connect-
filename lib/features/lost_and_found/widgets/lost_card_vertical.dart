@@ -6,13 +6,12 @@ import 'package:vit_connect_plus/utils/constants/colors.dart';
 import 'package:vit_connect_plus/utils/constants/sizes.dart';
 import 'package:vit_connect_plus/utils/helpers/helper_functions.dart';
 
-class FoundCardVertical extends StatelessWidget {
+class LostCardVertical extends StatelessWidget {
   final String name;
   final String date;
   final String location;
   final String contact;
-  final String imageUrl;
-  const FoundCardVertical({super.key, required this.name, required this.date, required this.location, required this.contact, required this.imageUrl});
+  const LostCardVertical({super.key, required this.name, required this.date, required this.location, required this.contact});
 
   @override
   Widget build(BuildContext context) {
@@ -35,8 +34,8 @@ class FoundCardVertical extends StatelessWidget {
               child: Stack(
                 children: [
                   RoundedImage(
-                    isNetworkImage: true,
-                    imageUrl: imageUrl,
+                    isNetworkImage: false,
+                    imageUrl: "assets/images/found-1.jpeg",
                     applyImageRadius: true,
                   ),
                   Positioned(
@@ -85,7 +84,7 @@ class FoundCardVertical extends StatelessWidget {
                     textAlign: TextAlign.left,
                   ),
                   Text(
-                    "Found : " + location,
+                    "Lost : " + location,
                     style: Theme.of(context).textTheme.labelLarge,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,

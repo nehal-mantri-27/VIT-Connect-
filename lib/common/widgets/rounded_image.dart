@@ -13,7 +13,7 @@ class RoundedImage extends StatelessWidget {
     this.backgroundColor = MyColors.light,
     this.fit,
     this.padding,
-    this.isNetworkImage = false,
+    required this.isNetworkImage ,
     this.onPressed,
   });
   final double? width, height;
